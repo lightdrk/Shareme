@@ -1,6 +1,7 @@
 html {
     margin-left: 0;
     padding-left: 0;
+    background-color: rgb(216, 213, 213);
 }
 
 .navbar {
@@ -34,7 +35,6 @@ html {
 
 .navIcon {
     border: white solid;
-    padding: 10px;
     margin-left: 15px;
     margin-top: 15px;
     margin-right: 15px;
@@ -45,6 +45,7 @@ html {
 }
 
 .top {
+    background-color: white;
     top: 0%;
     left: 20%;
     right: 0%;
@@ -54,28 +55,23 @@ html {
     width: 100%;
     padding-left: 65%;
     margin-left: 30px;
-    border: black solid;
 }
 
 .Mid {
-    border: red solid;
     left: 22%;
     right: 0%;
     top: 11%;
     bottom: 100%;
     display: block;
     position: absolute;
-    background-color: rgb(223, 223, 220);
 }
 
 #change {
-    border: black solid;
     width: 8%;
     padding: 0.5%;
 }
 
 #iconForView {
-    border: black solid;
     display: block;
     position: absolute;
     left: 95%;
@@ -83,20 +79,74 @@ html {
 }
 
 /*this is card view for the files use this in javascript*/
-
-#main-mid{
-    border: black solid;
-    width:200px;
-    height: 220px;
-    padding: 2%;
+#cardInsertion {
     display: flex;
+    flex-wrap: wrap;
 }
 
-#iconFileType{
+.cardContainer{
+    background: grey;
+    width:250px;
+    height: 260px;
+    border-radius: 10px 10px 10x 10px;
+    margin: 10px;
+}
+
+.main-mid{
+    width:250px;
+    height: 220px;
+    padding: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.iconFileType{
     border: black solid;
     display: block;
     align-items: center;
     width: 60px;
     height: 50px;
+    margin-right: 90px;
+    margin-bottom: 100px;
 }
+
+.dottedThree{
+    width: 20px;
+    height: 30px;
+    opacity: 20;
+}
+
+.FolderName{
+    margin: 0;
+}
+
+.property{
+    margin: 0;
+}
+
+.bottomOfCard{
+    display: flex;
+    height: 15%;
+    border-radius: 0px 0px 10x 10px;
+}
+
+.size{
+    margin-left: 5%;
+    margin-right:20%;
+    margin-bottom: 0;
+    margin-top:5%;
+}
+.sharedWith{
+    margin-left: 10%;
+    margin-bottom: 0;
+    margin-top:5%;
+}
+
+
+
+
+
 
