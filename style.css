@@ -25,11 +25,12 @@ html {
 
 .nav {
     color: rgb(191, 194, 197);
-    display: block;
+    display: flex;
     border: white solid;
     width: 85%;
     height: 9%;
     margin-bottom: 5%;
+    align-items: center;
 
 }
 
@@ -38,6 +39,11 @@ html {
     margin-left: 15px;
     margin-top: 15px;
     margin-right: 15px;
+    width: 40px;
+}
+
+.navText{
+    text-align: center;
 }
 
 #logout {
