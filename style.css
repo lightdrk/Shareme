@@ -31,6 +31,7 @@ html {
     height: 9%;
     margin-bottom: 5%;
     align-items: center;
+    border-radius: 20px 20px 20px 20px;
 
 }
 
@@ -40,6 +41,9 @@ html {
     margin-top: 15px;
     margin-right: 15px;
     width: 40px;
+}
+.nav:hover{
+    background-color: rgb(156, 63, 243);
 }
 
 .navText{
@@ -84,6 +88,9 @@ html {
     top: 20%;
 }
 
+.cardInsertion:hover{
+}
+
 /*this is card view for the files use this in javascript*/
 #cardInsertion {
     display: flex;
@@ -94,7 +101,7 @@ html {
     background: grey;
     width:250px;
     height: 260px;
-    border-radius: 10px 10px 10x 10px;
+    border-radius: 20px 20px 20x 20px;
     margin: 10px;
 }
 
@@ -106,7 +113,7 @@ html {
     flex-wrap: wrap;
     box-sizing: border-box;
     background: white;
-    border-radius: 10px 10px 0 0;
+    border-radius: 20px 20px 0 0;
 }
 
 .iconFileType{
@@ -136,7 +143,7 @@ html {
 .bottomOfCard{
     display: flex;
     height: 15%;
-    border-radius: 0px 0px 10x 10px;
+    border-radius: 0px 0px 20x 20px;
 }
 
 .size{

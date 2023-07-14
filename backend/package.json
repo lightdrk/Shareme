@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "basic-ftp": "^5.0.3"
+    "basic-ftp": "^5.0.3",
+    "ftpd": "^0.2.16"
   }
 }
