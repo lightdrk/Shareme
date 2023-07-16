@@ -63,12 +63,15 @@ html {
     display: flex;
     height: 10%;
     position: absolute;
-    width: 100%;
+    width: 78%;
     padding-left: 0%;
     margin-left: 30px;
+    justify-content: space-between;
 }
 
-#addUsingJs {}
+#addUsingJs {
+    padding-left: 1%;
+}
 
 .Mid {
     left: 22%;
