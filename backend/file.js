@@ -1,4 +1,11 @@
-var fs = require('fs');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const express = require('express');
+
+
+const app = express();
+const port = 3000;
+
 
 const cwd = process.cwd();
 var WorkspacePath = "/home/arch/Desktop/TestFolder/test";
@@ -8,7 +15,8 @@ function PathFiles(){
     //front end will as confirm path like are you sure naming folder etc.
     try{
         if(!fs.existsSync(WorkspacePath)){
-            fs.mkdir(WorkspacePath);
+            mkdirp.sync(WorkspacePath);
+            console.log("dir is been created.");
         }
     } catch(err){
         console.error(err);
@@ -19,7 +27,13 @@ function PathFiles(){
 function dirContent(){
     // WorkspacePath = function PathFiles();
     PathFiles();
-    console.log(fs.readdirSync(WorkspacePath));
+    try {
+        const files = fs.readdirSync(WorkspacePath);
+        console.log(files);
+    }catch(err){
+        console.error(err);
+    }
+    return files;
 }
 
 
