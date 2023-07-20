@@ -95,7 +95,10 @@ html {
     top: 20%;
 }
 
-.cardInsertion:hover {}
+.cardInsertion:hover {
+    transform: scale(1.1);
+    border: 3px solid rgb(80, 7, 80);
+}
 
 /*this is card view for the files use this in javascript*/
 #cardInsertion {

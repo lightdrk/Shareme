@@ -28,12 +28,12 @@ function dirContent(){
     // WorkspacePath = function PathFiles();
     PathFiles();
     try {
-        const files = fs.readdirSync(WorkspacePath);
-        console.log(files);
+        var nfiles = fs.readdirSync(WorkspacePath);
+        console.log(nfiles);
     }catch(err){
         console.error(err);
     }
-    return files;
+    return nfiles;
 }
 
 
