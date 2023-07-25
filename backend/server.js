@@ -1,6 +1,6 @@
 const express = require('express');
-const corns = require('cors')
-const file = require('./file')
+const corns = require('cors');
+const file = require('./file');
 const app = express();
 const port = 3000;
 
