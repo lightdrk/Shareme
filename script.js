@@ -34,11 +34,27 @@ const cardInsertionHtmlSnippet =  '<div class="cardContainer">' +
                                     '</div>' +
                                     '</div>';
 
+
+                                    
 //usable funtions
 function topConnectButton(){
     textTopConnectButton = topUserInput.value;
     topUserInput.value = "";
-    console.log(textTopConnectButton);
+    fetch('http://localhost:3000/file',{
+        method:'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({path:textTopConnectButton})
+    })
+    .then(response => response.json())
+    .then(data=> {
+        let responseFromFile = data.response;
+    })
+    .catch((error) =>{
+        console.error(error);
+    })
+    //will get a response if success 200
 }
 
 //workspace funtions 
@@ -47,7 +63,7 @@ function WorkspaceEvent(){
     changeInP.innerText = "WORKSPACE";
     addUsingJs.innerHTML = addUsingJsHtmlSnippet;
     cardInsertion.innerHTML = "";
-    //const numberOfFiles = fetch('/file?path=${encodeURIComponent(textTopConnectButton)}');
+    
 }
 
 // connect options funtions
@@ -75,6 +91,8 @@ function FilesEvent(){
 function LgoutEvent(){
 
 }
+
+
 workspaceEvent.addEventListener('click',WorkspaceEvent);
 //workspaceEvent.addEventListener("click",WorkspaceEvent);
 connectEvent.addEventListener('click',ConnectEvent);

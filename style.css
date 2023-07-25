@@ -73,6 +73,12 @@ html {
     padding-left: 1%;
 }
 
+#connect {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+  }
+
 .Mid {
     left: 22%;
     right: 0%;

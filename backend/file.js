@@ -1,16 +1,11 @@
+const exp = require('constants');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
-const express = require('express');
-
-
-const app = express();
-const port = 3000;
-
 
 const cwd = process.cwd();
-var WorkspacePath = "/home/arch/Desktop/TestFolder/test";
+//var WorkspacePath = "/home/arch/Desktop/TestFolder/test";
 //get Path from frontend
-function PathFiles(){
+function PathFiles(WorkspacePath){
     //here call for data from front end 
     //front end will as confirm path like are you sure naming folder etc.
     try{
@@ -24,9 +19,9 @@ function PathFiles(){
     //return WorkspacePath;
 }
 
-function dirContent(){
+function dirContent(WorkspacePath){
     // WorkspacePath = function PathFiles();
-    PathFiles();
+    PathFiles(WorkspacePath);
     try {
         var nfiles = fs.readdirSync(WorkspacePath);
         console.log(nfiles);
@@ -36,5 +31,4 @@ function dirContent(){
     return nfiles;
 }
 
-
-dirContent();
+exports.filein = dirContent;
