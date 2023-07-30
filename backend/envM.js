@@ -6,16 +6,21 @@ ips.getPublicIP((err,ip_json)=>{
     if (err){
         console.error(err);
     }else{
-        console.log(ip_json.ip);
+        ips.getLocalIP((err,localip)=>{
+            if(err){
+                console.error(err);
+            }else{
+                console.log(localip)
+            }
+        });
+        let value = password.pass();
+        fs.writeFile('cred.env',`PublicIP = $(ip_json)\n LocalIP = $(localip)\nPort = 8080\nUser = fptuser\nPWD = $(value) `, function(err){
+            if (err) throw err;
+        }
+        );
     }
 });
 
-ips.getLocalIP((err,localip)=>{
-    if(err){
-        console.error(err);
-    }else{
-        console.log(localip)
-    }
-});
-let value = password.pass();
+
+
 console.log(value);
