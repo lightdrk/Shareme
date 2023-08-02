@@ -33,17 +33,20 @@ if (keyFile && certFile){
     console.log('ssl  err ,cert err')
 }
 
+
 server = new ftpd.FtpServer(options.LocalHost,{
     //getting shared folder path from front end
-    getInitialCwd: function(sharePath = '/home/arch/Desktop',callback){
-        if(fs.existsSync(sharePath)){
-            console.log(sharePath)
-            return sharePath;
+    getInitialCwd: ()=>{
+        let paths=path.join(process.cwd(),'shared');
+        if(fs.existsSync()){
+            return paths;
         }else{
-            exit('path not found');
+            console.log(paths);
+            console.log('path not found');
         }
     },
     getRoot: function(){
+        console.log(process.cwd())
         return process.cwd();
     },
     pasvPortRangeStart: 1025,
@@ -53,32 +56,22 @@ server = new ftpd.FtpServer(options.LocalHost,{
     useReadFile: true,
     useWriteFile: false,
     allowedCommands: [ 
-    'XMKD',
-    'AUTH',
-    'TLS',
-    'SSL',
-    'USER',
-    'PASS',
-    'PWD',
-    'OPTS',
-    'TYPE',
-    'PORT',
-    'PASV',
-    'LIST',
-    'CWD',
-    'MKD',
-    'SIZE',
-    'STOR',
-    'MDTM',
-    'DELE',
-    'QUIT'
-    ],
+        'SYST',
+        'PORT',
+        'PASV',
+        'LIST',
+        'USER',
+        'PASS',
+        'RETR'
+        ],
 
 });
 
 server.on('error',function(error){
     console.log('FTP Server error:',error);
 });
+
+server.debugging = 4;
 
 server.on('client:connected', function(connection){
     console.log('client connected: '+connection.remoteAddress);
@@ -102,8 +95,25 @@ server.on('client:connected', function(connection){
             failure();
         }
     })
+    connection.on('command:retr', (connection, filename)=>{
+        let sharePath = '/home/arch/Desktop/README.license';
+        console.log(sharePath)
+        fs.readFile(sharePath,(err,data)=>{
+            if (err){
+                connection.write(550,'Error READING FILE');
+            }else{
+                connection.write(150,'data connection established');
+                connection.dataSocket.write(data);
+                connection.dataSocket.end();
+                connection.write(226,'closing connection');
+            }
+        })
+    })
 });
 
-server.debugging = 4;
+
+
+
+
 server.listen(options.Port);
 console.log('port :' + options.Port);
