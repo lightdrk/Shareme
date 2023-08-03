@@ -36,9 +36,9 @@ if (keyFile && certFile){
 
 server = new ftpd.FtpServer(options.LocalHost,{
     //getting shared folder path from front end
-    getInitialCwd: ()=>{
+    getInitialCwd: (connection)=>{
         let paths=path.join(process.cwd(),'shared');
-        if(fs.existsSync()){
+        if(fs.existsSync(paths)){
             return paths;
         }else{
             console.log(paths);
@@ -62,9 +62,9 @@ server = new ftpd.FtpServer(options.LocalHost,{
         'LIST',
         'USER',
         'PASS',
-        'RETR'
+        'GET'
         ],
-
+    customCommands: {'down': true},
 });
 
 server.on('error',function(error){
@@ -78,37 +78,36 @@ server.on('client:connected', function(connection){
     connection.on('command:user',function(user,success,failure){
         console.log(user);
         if (user){
-            success();
+            success(user);
         }else{
             failure();
         }
-    })
+    });
     connection.on('command:pass',function(pass,success,failure){
-        console.log('!!!!!!!!!!' + process.env.Pass);
-        console.log('#####');
-        console.log(process.env.Pass == pass);
-        console.log('###########');
         if(process.env.Pass == pass){
             console.log('success',pass);
             success();
         }else{
             failure();
         }
-    })
-    connection.on('command:retr', (connection, filename)=>{
+    });
+    connection.on('command:down', (down,success,failure)=>{
         let sharePath = '/home/arch/Desktop/README.license';
         console.log(sharePath)
         fs.readFile(sharePath,(err,data)=>{
             if (err){
                 connection.write(550,'Error READING FILE');
+                failure();
             }else{
                 connection.write(150,'data connection established');
                 connection.dataSocket.write(data);
                 connection.dataSocket.end();
                 connection.write(226,'closing connection');
+                success();
+
             }
         })
-    })
+    });
 });
 
 

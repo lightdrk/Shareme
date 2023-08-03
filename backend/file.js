@@ -24,11 +24,10 @@ function dirContent(WorkspacePath){
     PathFiles(WorkspacePath);
     try {
         var nfiles = fs.readdirSync(WorkspacePath);
-        console.log(nfiles);
     }catch(err){
+        nfiles = 'err'
         console.error(err);
     }
     return nfiles;
 }
-
-exports.filein = dirContent;
+exports.file = dirContent;
