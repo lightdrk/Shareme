@@ -1,6 +1,8 @@
 const exp = require('constants');
-const fs = require('fs');
 const mkdirp = require('mkdirp');
+const {Menv,config} = require('./envM')
+const fs = require('fs');
+
 
 const cwd = process.cwd();
 //var WorkspacePath = "/home/arch/Desktop/TestFolder/test";
@@ -19,15 +21,29 @@ function PathFiles(WorkspacePath){
     //return WorkspacePath;
 }
 
-function dirContent(WorkspacePath){
+require('dotenv').config()
+
+function dirContent(WorkspacePath='/'){
+    var nfiles ;
     // WorkspacePath = function PathFiles();
-    PathFiles(WorkspacePath);
-    try {
-        var nfiles = fs.readdirSync(WorkspacePath);
-    }catch(err){
-        nfiles = 'err'
-        console.error(err);
+    if(WorkspacePath.length > 1){
+        PathFiles(WorkspacePath);
+        try {
+            nfiles = fs.readdirSync(WorkspacePath);
+            config(WorkspacePath);
+            
+        }catch(err){
+            nfiles = 'err'
+            console.error(err);
+        }
+    }else{
+        let update;
+        fs.readFile('config.config',(err,data)=>{
+            update = JSON.parse(data)[data];
+        })
+        nfiles = fs.readFileSync(update);
     }
     return nfiles;
+    
 }
 exports.file = dirContent;

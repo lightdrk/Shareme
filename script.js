@@ -6,11 +6,16 @@ const logoutEvent = document.getElementById('logout');
 const changeInP = document.getElementById('changeIt');
 const addUsingJs = document.getElementById('addUsingJs');
 const cardInsertion = document.getElementById('cardInsertion');
-const topConnect = document.getElementById('connect');
-const topUserInput = document.getElementById('UserInput');
+
+
 const topConnectPtag = document.getElementById('main-connect');
 
+
+const socket = new WebSocket('ws://localhost:3001');
+
+
 let change ;
+function  addUsingJsHtmlSnippet(change){ return `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;}
 
 const cardInsertionHtmlSnippet =  '<div class="cardContainer">' +
                                     '<div class="main-mid">' +
@@ -30,14 +35,56 @@ const cardInsertionHtmlSnippet =  '<div class="cardContainer">' +
 
 //workspace funtions 
 function WorkspaceEvent(){
-
-    change = "workspacePath"
-    let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
+    change = "workSpacePath"
     changeInP.innerText = "WORKSPACE";
-    addUsingJs.innerHTML = addUsingJsHtmlSnippet;
-    topConnect.addEventListener('click', ()=>{
-        var textTopConnectButton;
-        textTopConnectButton = topUserInput.value;
+    addUsingJs.innerHTML = addUsingJsHtmlSnippet(change);
+    let topConnect = document.getElementById('connect');
+    let topUserInput = document.getElementById('UserInput');
+    topConnect.addEventListener('click',()=>{
+        var textTopConnectButton = topUserInput.value;
+        topUserInput.value = "";
+        
+        fetch('http://localhost:3000/fileInfo',{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({path:textTopConnectButton})
+        })
+        .then(response => response.json())
+        .then(data => {
+            let responseFromFile = data;
+            console.log(data);
+        })
+        .catch((error) =>{
+            console.error(error);
+        })
+    //will get a response if success 200
+    });
+    //making a socket for constant update
+    socket.addEventListener('message',(event)=>{
+        const data = JSON.parse(event.data);
+    });
+    socket.addEventListener('open',()=>{
+        console.log('established');
+    });
+    socket.addEventListener('close',()=>{
+        console.log('closed');
+    });
+    
+}
+
+// connect options funtions
+
+function ConnectEvent(){
+    change = "Connect"
+    changeInP.innerText = change;
+    addUsingJs.innerHTML = addUsingJsHtmlSnippet(change);
+    // attaches event to the top of mid section
+    let topConnect = document.getElementById('connect');
+    let topUserInput = document.getElementById('UserInput');
+    topConnect.addEventListener('click',()=>{
+        var textTopConnectButton = topUserInput.value;
         topUserInput.value = "";
         fetch('http://localhost:3000/fileInfo',{
             method:'POST',
@@ -58,17 +105,6 @@ function WorkspaceEvent(){
     //will get a response if success 200
     });
     
-    cardInsertion.innerHTML = cardInsertionHtmlSnippet;
-    
-}
-
-// connect options funtions
-
-function ConnectEvent(){
-    change = "Connect"
-    let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
-    changeInP.innerText = change;
-    addUsingJs.innerHTML = addUsingJsHtmlSnippet;
 
     cardInsertion.innerHTML = cardInsertionHtmlSnippet;
 
@@ -76,7 +112,7 @@ function ConnectEvent(){
 
 function CloudsEvent(){
     changeInP.innerText = "CLOUD";
-    let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
+    //let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
     
     addUsingJs.innerHTML = "";
     cardInsertion.innerHTML = ""
@@ -84,7 +120,7 @@ function CloudsEvent(){
 
 function FilesEvent(){
     changeInP.innerText = "FILES";
-    let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
+    //let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
 
     addUsingJs.innerHTML = "";
     cardInsertion.innerHTML = "";

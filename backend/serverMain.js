@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({port: 3001});
 const {file} = require('./file')
 
 const app = express();
@@ -25,4 +28,13 @@ app.post('/fileInfo',async(req,res)=>{
 })
 app.listen(port,()=>{
     console.log(`Example app listening on port ${port}`);
+})
+
+wss.on('connection',ws=>{
+    console.log('connection established');
+    do {
+        ws.send(JSON.stringify({'data': data}));
+    }while (true){
+        let data = file();
+    }
 })
