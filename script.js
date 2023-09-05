@@ -8,18 +8,102 @@ const addUsingJs = document.getElementById('addUsingJs');
 const cardInsertion = document.getElementById('cardInsertion');
 
 
-const topConnectPtag = document.getElementById('main-connect');
 
 
-const socket = new WebSocket('ws://localhost:3001');
+var socket = null ;
 
 
-let change ;
-function  addUsingJsHtmlSnippet(change){ return `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;}
+function  addUsingJsHtmlSnippet(change,placeholder){ 
+    
+    // create a container element to hold the button and input
+    const container = document.createElement('p');
+    container.id = 'main-connect';
+    
+    //create an input element 
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.id = 'UserInput';
+    inputElement.placeholder = placeholder;
 
-const cardInsertionHtmlSnippet =  '<div class="cardContainer">' +
+    //create a button element
+    const buttonElement = document.createElement('button');
+    buttonElement.type = 'button';
+    buttonElement.id = 'connect';
+    //buttonElement.textContent = 'click me';
+
+    buttonElement.addEventListener('click',function(){
+        if (socket){
+            socket.close();
+            socket = null;
+        }
+
+        let topUserInput = document.getElementById('UserInput');
+        var textTopConnectButton = topUserInput.value;
+        topUserInput.value = "";
+
+        fetch('http://localhost:3000/fileInfo',{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data:textTopConnectButton})
+        })
+        .then(response => response.json())
+        .then(data => {
+            let responseFromFile = data;
+            console.log('data',data);
+        })
+        .catch((error) =>{
+            console.error(error);
+        })
+        if (socket == null){
+            socket = new WebSocket('ws://localhost:3001');
+        
+            socket.addEventListener('message',(event)=>{
+                data = JSON.parse(event.data);
+                console.log(data);
+            });
+            socket.addEventListener('open',()=>{
+                console.log('established');
+                socket.send('file');
+            });
+            socket.addEventListener('close',()=>{
+                console.log('closed');
+            });
+        }
+    });
+    container.appendChild(inputElement);
+    container.appendChild(buttonElement);
+    const existingChild = document.getElementById('connect');
+    //append the container to the body or a specific element
+    if (existingChild){ 
+        if( existingChild.placeholder == change){
+            return 
+        }else{
+            let topConnectPtag = document.getElementById('main-connect');
+            addUsingJs.removeChild(topConnectPtag);
+        }      
+    }
+    addUsingJs.appendChild(container);
+
+}
+
+const cardInsertionHtmlSnippetFile =  '<div class="cardContainer">' +
                                     '<div class="main-mid">' +
-                                    '<i class="iconFileType" href="">icon</i>' +
+                                    `<img class="iconFileType" src="/home/arch/Desktop/Projects/Shareme/iconimg/files.png">` +
+                                    '<button class="dottedThree">:</button>' +
+                                    '<div class="property"></div>' +
+                                    '<p class="FolderName">file or folder name</p>' +
+                                    '<p class="property">property time</p>' +
+                                    '</div>' +
+                                    '<div class="bottomOfCard">' +
+                                    '<p class="size">with size</p>' +
+                                    '<p class="sharedWith">people</p>' +
+                                    '</div>' +
+                                    '</div>';
+const cardInsertionHtmlSnippetFolder =  '<div class="cardContainer">' +
+                                    '<div class="main-mid">' +
+                                    `<img class="iconFileType" src="/home/arch/Desktop/Projects/Shareme/iconimg/folder.png">` +
                                     '<button class="dottedThree">:</button>' +
                                     '<div class="property"></div>' +
                                     '<p class="FolderName">file or folder name</p>' +
@@ -33,81 +117,52 @@ const cardInsertionHtmlSnippet =  '<div class="cardContainer">' +
 
 
 
+function ShowTemplate(){
+
+}
+
 //workspace funtions 
 function WorkspaceEvent(){
-    change = "workSpacePath"
+    if (socket){
+        socket.send('workspace');
+    }
+    var data;
+    console.log('workspace');
     changeInP.innerText = "WORKSPACE";
-    addUsingJs.innerHTML = addUsingJsHtmlSnippet(change);
-    let topConnect = document.getElementById('connect');
-    let topUserInput = document.getElementById('UserInput');
-    topConnect.addEventListener('click',()=>{
-        var textTopConnectButton = topUserInput.value;
-        topUserInput.value = "";
-        
-        fetch('http://localhost:3000/fileInfo',{
-            method:'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({path:textTopConnectButton})
-        })
-        .then(response => response.json())
-        .then(data => {
-            let responseFromFile = data;
-            console.log(data);
-        })
-        .catch((error) =>{
-            console.error(error);
-        })
-    //will get a response if success 200
-    });
+    addUsingJsHtmlSnippet("workSpacePath"
+,'example');
     //making a socket for constant update
-    socket.addEventListener('message',(event)=>{
-        const data = JSON.parse(event.data);
-    });
-    socket.addEventListener('open',()=>{
-        console.log('established');
-    });
-    socket.addEventListener('close',()=>{
-        console.log('closed');
-    });
-    
+    if (socket == null){
+        socket = new WebSocket('ws://localhost:3001');
+        
+        socket.addEventListener('message',(event)=>{
+            data = JSON.parse(event.data);
+            console.log(data);
+        });
+        socket.addEventListener('open',()=>{
+            console.log('established');
+            socket.send('workspace');
+        });
+        socket.addEventListener('close',()=>{
+            console.log('closed');
+        });
+    }
+
 }
 
 // connect options funtions
 
 function ConnectEvent(){
-    change = "Connect"
-    changeInP.innerText = change;
-    addUsingJs.innerHTML = addUsingJsHtmlSnippet(change);
+    if (socket){
+        socket.close();
+        socket = null;
+        console.log('web socket closed');
+    }
+    changeInP.innerText = "Connect";
+    addUsingJsHtmlSnippet("Connect",'ip');
     // attaches event to the top of mid section
-    let topConnect = document.getElementById('connect');
-    let topUserInput = document.getElementById('UserInput');
-    topConnect.addEventListener('click',()=>{
-        var textTopConnectButton = topUserInput.value;
-        topUserInput.value = "";
-        fetch('http://localhost:3000/fileInfo',{
-            method:'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({path:textTopConnectButton})
-        })
-        .then(response => response.json())
-        .then(data => {
-            let responseFromFile = data;
-            console.log(data);
-        })
-        .catch((error) =>{
-            console.error(error);
-        })
-        
-    //will get a response if success 200
-    });
-    
-
-    cardInsertion.innerHTML = cardInsertionHtmlSnippet;
-
+    cardInsertion.innerHTML = cardInsertionHtmlSnippetFile;
+    cardInsertion.innerHTML = cardInsertionHtmlSnippetFolder;
 }
 
 function CloudsEvent(){
@@ -119,6 +174,24 @@ function CloudsEvent(){
 }
 
 function FilesEvent(){
+    if (socket){
+        socket.send('file');
+    }
+    if (socket == null){
+        socket = new WebSocket('ws://localhost:3001');
+    
+        socket.addEventListener('message',(event)=>{
+            data = JSON.parse(event.data);
+            console.log(data);
+        });
+        socket.addEventListener('open',()=>{
+            console.log('established');
+            socket.send('file');
+        });
+        socket.addEventListener('close',()=>{
+            console.log('closed');
+        });
+    }
     changeInP.innerText = "FILES";
     //let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
 
@@ -131,6 +204,7 @@ function LgoutEvent(){
 }
 
 
+ConnectEvent();
 workspaceEvent.addEventListener('click',WorkspaceEvent);
 
 connectEvent.addEventListener('click',ConnectEvent);
@@ -139,3 +213,11 @@ cloudsEvent.addEventListener('click',CloudsEvent);
 
 filesEvent.addEventListener('click',FilesEvent);
 
+
+
+
+
+
+
+
+//TODO:check for button event connect vala

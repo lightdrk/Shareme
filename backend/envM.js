@@ -26,7 +26,8 @@ function Menv(){
 }
 
 function configWrite(workspacepath){
-    fs.writeFile('config.config',`{workspace: ${workspacepath}}`, function(err){
+    
+    fs.writeFile('config.json',`{"workspace": "${workspacepath}"}`, function(err){
         if (err) throw err;
         console.log('config created!!!!!');
     });

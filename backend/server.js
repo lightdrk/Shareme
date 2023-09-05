@@ -6,7 +6,6 @@ const port = 3000;
 
 app.use(express.json());
 app.use(corns());
-console.log(file);
 
 app.post('/file',(req,res) => {
     let WorkspacePath = req.body.path;
