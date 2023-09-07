@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const cors = require('cors')
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const {connectFTP} = require('./connectFTP.js');
 
 const wss = new WebSocket.Server({port: 3001});
 const {file} = require('./file')
@@ -27,7 +27,21 @@ app.post('/fileInfo',async(req,res)=>{
     }else{
         res.status(500).json({'data': 'err'});
     }
-})
+});
+app.post('/connect',async(req,res)=>{
+	if (req.body){
+		console.log(req.body)
+		let data = await connectFTP(req.body);
+		console.log(data);
+		if (data != 'err'){
+			res.status(200).json({'data':data});
+		}else{
+			res.status(500).json({'error':data});
+		}
+	}else{
+		res.status(500).json({'data': 'err'});
+	}
+});
 app.listen(port,()=>{
     console.log(`Example app listening on port ${port}`);
 })

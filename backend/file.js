@@ -35,13 +35,15 @@ function dirContent(WorkspacePath=null){
             
         }catch(err){
             nfiles = ['err'];
-            console.error(err);
         }
     }else{
         var Workspace = require('./config.json');
         // issue need to be viewed
-        
-        nfiles = fs.readdirSync(Workspace['workspace']);
+       try{
+	       nfiles = fs.readdirSync(Workspace['workspace']);
+	}catch(error){
+		nfiles = ['err'];
+	}
     }
     return nfiles;
     
