@@ -69,6 +69,29 @@ html {
     justify-content: space-between;
 }
 
+#settingMenu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  display: none;
+}
+
+#settingMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#settingMenu ul li {
+  margin-bottom: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+
 #addUsingJs {
     padding-left: 1%;
 }

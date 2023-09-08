@@ -6,6 +6,8 @@ const logoutEvent = document.getElementById('logout');
 const changeInP = document.getElementById('changeIt');
 const addUsingJs = document.getElementById('addUsingJs');
 const cardInsertion = document.getElementById('cardInsertion');
+const settingEvent = document.getElementById('setting');
+const settingInsideItem = document.getElementById('settingMenu');
 
 
 
@@ -47,13 +49,14 @@ function  addUsingJsHtmlSnippetConnect(change,placeholder,creds){
         }      
     }
     addUsingJs.appendChild(container);
-    buttonElement.addEventListener('click',function(){
+	buttonElement.addEventListener('click', ()=>{
 
 
         let topUserInput = document.getElementById('UserInput');
         creds[placeholder] = topUserInput.value;
         topUserInput.value = "";
     	if (placeholder == 'password'){
+		document.getElementById('connect').disabled = true;
 
 		fetch('http://localhost:3000/connect',{
 		    method:'POST',
@@ -63,16 +66,24 @@ function  addUsingJsHtmlSnippetConnect(change,placeholder,creds){
 		    body: JSON.stringify(creds)
 		})
 		.then(response => response.json())
-		.then(data => {
-		    let responseFromFile = data;
+		.then(async data => {
+		    let responseFromFile = await  data;
+		    
 		    console.log('data',data);
+		    if (data['data'] == 0){
+			//code here for showing error usin button issue 
+		    }
+		    addUsingJsHtmlSnippetConnect('connect','ip',creds);
 		})
 		.catch((error) =>{
 		    console.error(error);
 		})
+		
+		
 	}else{
 		addUsingJsHtmlSnippetConnect('connect','password',creds);
-	}	
+	}
+	
     });
 
 
@@ -236,6 +247,24 @@ function LgoutEvent(){
 
 }
 
+//settings top bar 
+
+function settings(){
+	//let canvas = 
+	if (settingInsideItem.style.display === "none"){
+		//show the menu above button
+		const rect = settingEvent.getBoundingClientRect();
+		settingInsideItem.style.top = rect.bottom + 'px';
+		settingInsideItem.style.left = rect.left + 'px';
+
+		setting.style.display = 'block';
+	}else{
+		//hide the menu
+		settingInsideItem.style.display = "none";
+	}
+
+}
+
 
 ConnectEvent();
 workspaceEvent.addEventListener('click',WorkspaceEvent);
@@ -246,11 +275,19 @@ cloudsEvent.addEventListener('click',CloudsEvent);
 
 filesEvent.addEventListener('click',FilesEvent);
 
+settingEvent.addEventListener('click',()=>{
+	settings();
+});
+document.addEventListener('click',(event) =>{
+	if (!settingInsideItem.contains(event.target) && event.target !== settingEvent){
+		settingInsideItem.style.display = "none";
+	}
+});
 
 
 
 
 
 
-
+//TODO: setting event and other check , create a setting pop up thingy
 //TODO:connect color button , while loading let it show or disable it ,do something with password thingy after trying to connect
