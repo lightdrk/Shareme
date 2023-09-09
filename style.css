@@ -74,7 +74,8 @@ html {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 5px;
-  display: none;
+  display: block;
+  opacity: 70%;
 }
 
 #settingMenu ul {
@@ -88,7 +89,7 @@ html {
 }
 
 .hidden {
-  display: none;
+  display:block ;
 }
 
 

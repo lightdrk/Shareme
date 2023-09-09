@@ -249,22 +249,22 @@ function LgoutEvent(){
 
 //settings top bar 
 
-function settings(){
-	//let canvas = 
-	if (settingInsideItem.style.display === "none"){
-		//show the menu above button
-		const rect = settingEvent.getBoundingClientRect();
-		settingInsideItem.style.top = rect.bottom + 'px';
-		settingInsideItem.style.left = rect.left + 'px';
-
-		setting.style.display = 'block';
-	}else{
-		//hide the menu
-		settingInsideItem.style.display = "none";
-	}
-
-}
-
+//function settings(){
+//	//let canvas = 
+//	if (settingInsideItem.style.display === "none"){
+//		//show the menu above button
+//		const rect = settingEvent.getBoundingClientRect();
+//		settingInsideItem.style.top = rect.bottom + 'px';
+//		settingInsideItem.style.left = rect.left + 'px';
+//
+//		setting.style.display = 'block';
+//	}else{
+//		//hide the menu
+//		settingInsideItem.style.display = "none";
+//	}
+//
+//}
+//
 
 ConnectEvent();
 workspaceEvent.addEventListener('click',WorkspaceEvent);
@@ -275,14 +275,14 @@ cloudsEvent.addEventListener('click',CloudsEvent);
 
 filesEvent.addEventListener('click',FilesEvent);
 
-settingEvent.addEventListener('click',()=>{
-	settings();
-});
-document.addEventListener('click',(event) =>{
-	if (!settingInsideItem.contains(event.target) && event.target !== settingEvent){
-		settingInsideItem.style.display = "none";
-	}
-});
+//settingEvent.addEventListener('click',()=>{
+//	settings();
+//});
+//document.addEventListener('click',(event) =>{
+//	if (!settingInsideItem.contains(event.target) && event.target !== settingEvent){
+//		settingInsideItem.style.display = "none";
+//	}
+//});
 
 
 
