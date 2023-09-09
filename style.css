@@ -69,27 +69,39 @@ html {
     justify-content: space-between;
 }
 
-#settingMenu {
+.hidden{
   position: absolute;
   background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 5px;
-  display: block;
+  
+  padding: 10px;
+  display: absolute;
   opacity: 70%;
+  border-radius: 5% 5% 5% 5%;
 }
 
-#settingMenu ul {
+.hidden ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-#settingMenu ul li {
-  margin-bottom: 5px;
+.hidden ul li {
+  margin-bottom: 10px;
 }
 
-.hidden {
-  display:block ;
+#settingMenu{
+  display: none;
+  left: 72%;
+}
+
+#notificationMenu{
+  display: none;
+  left: 82%;
+}
+
+#profileMenu{
+  display: none;
+  left: 85%;
 }
 
 

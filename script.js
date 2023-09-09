@@ -8,6 +8,11 @@ const addUsingJs = document.getElementById('addUsingJs');
 const cardInsertion = document.getElementById('cardInsertion');
 const settingEvent = document.getElementById('setting');
 const settingInsideItem = document.getElementById('settingMenu');
+const notificationEvent = document.getElementById('notification');
+const notificationInsideItem = document.getElementById('notificationMenu');
+const profileEvent = document.getElementById('profile');
+const profileInsideItem = document.getElementById('profileMenu');
+
 
 
 
@@ -274,6 +279,39 @@ connectEvent.addEventListener('click',ConnectEvent);
 cloudsEvent.addEventListener('click',CloudsEvent);
 
 filesEvent.addEventListener('click',FilesEvent);
+
+settingEvent.addEventListener('click',()=>{
+  if (notificationInsideItem.style.display){
+    notificationMenu.style.display = 'none';
+  }
+  if (profileInsideItem.style.display){
+    profileMenu.style.display = 'none'
+  }
+
+  settingInsideItem.style.display = 'block';
+});
+
+notificationEvent.addEventListener('click',()=>{
+  if (settingInsideItem.style.display){
+    settingInsideItem.style.display = 'none';
+  }
+  if (profileInsideItem.style.display){
+    profileInsideItem.style.display = 'none'
+  }
+
+  notificationInsideItem.style.display = 'block';
+});
+
+profileEvent.addEventListener('click',()=>{
+  if (settingInsideItem.style.display){
+    settingInsideItem.style.display = 'none';
+  }
+  if (notificationInsideItem.style.display){
+    notificationInsideItem.style.display = 'none'
+  }
+
+  profileInsideItem.style.display = 'block';
+});
 
 //settingEvent.addEventListener('click',()=>{
 //	settings();
