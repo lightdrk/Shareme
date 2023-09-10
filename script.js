@@ -16,7 +16,9 @@ const profileInsideItem = document.getElementById('profileMenu');
 
 
 
-
+var time;
+var name;
+var size;
 var socket = null ;
 
 function  addUsingJsHtmlSnippetConnect(change,placeholder,creds){ 
@@ -131,20 +133,20 @@ function  addUsingJsHtmlSnippet(change,placeholder){
 
 const cardInsertionHtmlSnippetFile =  '<div class="cardContainer">' +
                                     '<div class="main-mid">' +
-                                    `<img class="iconFileType" src="/home/arch/Desktop/Projects/Shareme/iconimg/files.png">` +
+                                    `<img class="iconFileType" src="./iconimg/files.png">` +
                                     '<button class="dottedThree">:</button>' +
                                     '<div class="property"></div>' +
-                                    '<p class="FolderName">file or folder name</p>' +
-                                    '<p class="property">property time</p>' +
+                                    `<p class="FolderName">${name}</p>` +
+                                    `<p class="property">${time}</p>` +
                                     '</div>' +
                                     '<div class="bottomOfCard">' +
-                                    '<p class="size">with size</p>' +
+                                    `<p class="size">${size}</p>` +
                                     '<p class="sharedWith">people</p>' +
                                     '</div>' +
                                     '</div>';
 const cardInsertionHtmlSnippetFolder =  '<div class="cardContainer">' +
                                     '<div class="main-mid">' +
-                                    `<img class="iconFileType" src="/home/arch/Desktop/Projects/Shareme/iconimg/folder.png">` +
+                                    `<img class="iconFileType" src="./iconimg/folder.png">` +
                                     '<button class="dottedThree">:</button>' +
                                     '<div class="property"></div>' +
                                     '<p class="FolderName">file or folder name</p>' +
@@ -208,7 +210,6 @@ function ConnectEvent(){
     var creds={};
     addUsingJsHtmlSnippetConnect("Connect",'ip',creds);
     console.log(creds);
-
     // attaches event to the top of mid section
     cardInsertion.innerHTML = cardInsertionHtmlSnippetFile;
     cardInsertion.innerHTML = cardInsertionHtmlSnippetFolder;
@@ -241,6 +242,7 @@ function FilesEvent(){
             console.log('closed');
         });
     }
+    
     changeInP.innerText = "FILES";
     //let addUsingJsHtmlSnippet = `<p id="main-connect">${change}:<input type="text" id="UserInput"><button id="connect" type="button"></button></p>`;
 
@@ -287,8 +289,11 @@ settingEvent.addEventListener('click',()=>{
   if (profileInsideItem.style.display){
     profileMenu.style.display = 'none'
   }
-
+  if (settingInsideItem.style.display){
+    settingInsideItem.style.display = 'none';
+  }
   settingInsideItem.style.display = 'block';
+  
 });
 
 notificationEvent.addEventListener('click',()=>{
@@ -312,6 +317,24 @@ profileEvent.addEventListener('click',()=>{
 
   profileInsideItem.style.display = 'block';
 });
+const check = document.getElementsByTagName('div');
+check[1].addEventListener('click',()=>{
+	settingInsideItem.style.display = 'none';
+	notificationInsideItem.style.display = 'none';
+	profileInsideItem.style.display = 'none';
+});
+check[6].addEventListener('click',()=>{
+settingInsideItem.style.display = 'none';
+notificationInsideItem.style.display = 'none';
+profileInsideItem.style.display = 'none';
+});
+check[8].addEventListener('click',()=>{
+settingInsideItem.style.display = 'none';
+notificationInsideItem.style.display = 'none';
+profileInsideItem.style.display = 'none';
+});
+
+
 
 //settingEvent.addEventListener('click',()=>{
 //	settings();
