@@ -130,72 +130,60 @@ function  addUsingJsHtmlSnippet(change,placeholder){
 
 
 }
-function cardInsertionHtmlSnippet(name,time,type){
+function cardInsertionHtmlSnippet(name,time,type,sz){
 
   const cardContainer = document.createElement('div');
-  cardContainer.class = 'cardContainer';
-  const main-mid = document.createElement('div');
-  main-mid.class = 'main-mid';
+  cardContainer.setAttribute('class', 'cardContainer');
+ 
+  const mainMid = document.createElement('div');
+  mainMid.setAttribute('class','main-mid');
+  
   const iconFile = document.createElement('img');
-  iconFile.class = 'iconFileType';
+  iconFile.setAttribute('class', 'iconFileType');
   iconFile.src = `./iconimg/${type}.png`;
+  
   const dottedThree = document.createElement('button');
-  property.class = 'dottedThree';
-  property.textContent = ':';
+  dottedThree.setAttribute('class', 'dottedThree');
+  dottedThree.textContent = ':';
+  
   const property = document.createElement('div');
-  property.class = 'propertyTime';
+  property.setAttribute('class', 'property');
+  
   const folderName = document.createElement('p');
-  folderName.class = 'FolderName';
+  folderName.setAttribute('class', 'FolderName');
   folderName.textContent = `${name}`;
+  
   const propertyTime = document.createElement('p');
-  propertyTime.class = 'property';
+  propertyTime.setAttribute('class', 'propertyTime');
+  
   propertyTime.textContent = `${time}`;
-  const buttonOfCard = document.createElement('div');
-  buttonOfCard.class = 'buttonOfCard';
+  
+  const bottomOfCard = document.createElement('div');
+  bottomOfCard.setAttribute('class', 'bottomOfCard');
+  
   const size = document.createElement('p');
-  size.class = 'size';
-  size.textContent = ${size};
+  size.setAttribute('class', 'size');
+  size.textContent = `${sz}`;
+  
   const sharedWith = document.createElement('p');
-  sharedWith.class = 'sharedWith';
+  sharedWith.setAttribute('class', 'sharedWith');
   sharedWith.textContent = 'people';
-  cardContainer.appendChild(main-mid);
-  main-mid.appendChild(iconFile);
-  main-mid.appendChild(dottedThree);
-  main-mid.appendChild(property);
-  main-mid.appendChild(folderName);
-  main-mid.appendChild(propertyTime);
+  cardContainer.appendChild(mainMid);
+ 
+  mainMid.appendChild(iconFile);
+  mainMid.appendChild(dottedThree);
+  mainMid.appendChild(property);
+ 
+  property.appendChild(folderName);
+  property.appendChild(propertyTime);
+  
   cardContainer.appendChild(bottomOfCard);
+  
   bottomOfCard.appendChild(size);
   bottomOfCard.appendChild(sharedWith);
+  
+  return cardContainer;
 }
-                                    '<div class="cardContainer">' +
-                                    '<div class="main-mid">' +
-                                    `<img class="iconFileType" src="./iconimg/files.png">` +
-                                    '<button class="dottedThree">:</button>' +
-                                    '<div class="property"></div>' +
-                                    `<p class="FolderName">${name}</p>` +
-                                    `<p class="property">${time}</p>` +
-                                    '</div>' +
-                                    '<div class="bottomOfCard">' +
-                                    `<p class="size">${size}</p>` +
-                                    '<p class="sharedWith">peoplele</p>' +
-                                    '</div>' +
-                                    '</div>';
-const cardInsertionHtmlSnippetFolder =  '<div class="cardContainer">' +
-                                    '<div class="main-mid">' +
-                                    `<img class="iconFileType" src="./iconimg/folder.png">` +
-                                    '<button class="dottedThree">:</button>' +
-                                    '<div class="property"></div>' +
-                                    '<p class="FolderName">file or folder name</p>' +
-                                    '<p class="property">property time</p>' +
-                                    '</div>' +
-                                    '<div class="bottomOfCard">' +
-                                    '<p class="size">with size</p>' +
-                                    '<p class="sharedWith">people</p>' +
-                                    '</div>' +
-                                    '</div>';
-
-
 
 function ShowTemplate(){
 
@@ -209,8 +197,7 @@ function WorkspaceEvent(){
     var data;
     console.log('workspace');
     changeInP.innerText = "WORKSPACE";
-    addUsingJsHtmlSnippet("workSpacePath"
-,'example');
+    addUsingJsHtmlSnippet("workSpacePath",'example');
     //making a socket for constant update
     if (socket == null){
         socket = new WebSocket('ws://localhost:3001');
@@ -248,9 +235,7 @@ function ConnectEvent(){
     addUsingJsHtmlSnippetConnect("Connect",'ip',creds);
     console.log(creds);
     // attaches event to the top of mid section
-    
-    cardInsertion.innerHTML = cardInsertionHtmlSnippetFile;
-    cardInsertion.innerHTML = cardInsertionHtmlSnippetFolder;
+    cardInsertion.appendChild(cardInsertionHtmlSnippet('m.txt','1:00','folder','9G'))
 }
 
 function CloudsEvent(){

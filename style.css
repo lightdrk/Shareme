@@ -150,15 +150,15 @@ html {
 
 .cardContainer {
     background: grey;
-    width: 250px;
-    height: 260px;
+    width: 200px;
+    height: 210px;
     border-radius: 20px 20px 20x 20px;
     margin: 10px;
 }
 
 .main-mid {
-    width: 250px;
-    height: 220px;
+    width: 200px;
+    height: 180px;
     padding: 5%;
     display: flex;
     flex-wrap: wrap;
@@ -185,16 +185,24 @@ html {
 
 .FolderName {
     margin: 0;
+    font-size: small;
 }
 
 .property {
-    margin: 0;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.propertyTime{
+  margin: 0;
+  font-size: small;
 }
 
 .bottomOfCard {
-    display: flex;
+    display: inline-flex;
     height: 15%;
     border-radius: 0px 0px 20x 20px;
+    justify-content: space-between;
 }
 
 .size {
@@ -202,6 +210,7 @@ html {
     margin-right: 20%;
     margin-bottom: 0;
     margin-top: 5%;
+    font-size: small;
 }
 
 .sharedWith {
